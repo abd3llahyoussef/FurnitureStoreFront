@@ -9,6 +9,22 @@ const initialState = {
 };
 
 
+import axios from "axios";
+
+const API_URL = "http://localhost:8080/auth";
+
+export const checkAuth = createAsyncThunk(
+    'user/checkAuth',
+    async (_, thunkAPI) => {
+        try {
+            const response = await axios.get(`${API_URL}/user`, { withCredentials: true });
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue('Not authenticated'+error.message);
+        }
+    }
+);
+
 export const createUser = createAsyncThunk(
     'user/createUser',
     async (userData, thunkAPI) => {
@@ -69,6 +85,18 @@ const userSlice = createSlice({
         .addCase(getUser.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
+        })
+        .addCase(checkAuth.pending, (state) => {
+            state.isLoading = true;
+        })
+        .addCase(checkAuth.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.user = action.payload;
+            state.isLoggedIn = true;
+        })
+        .addCase(checkAuth.rejected, (state) => {
+            state.isLoading = false;
+            state.isLoggedIn = false;
         }); 
         
 }

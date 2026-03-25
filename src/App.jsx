@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router";
-import { useContext } from "react";
 import Hero from "./components/Hero.jsx";
 import Products from "./components/Products.jsx";
 import About from "./components/About.jsx";
@@ -13,9 +12,19 @@ import NavBar from "./components/NavBar.jsx";
 import { ProductContext } from "./features/productContext.jsx";
 import UserContainer from "./components/UserContainer.jsx";
 
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { checkAuth } from "./features/userSlice.jsx";
+
 import "./app.css"
 function App() {
-  const { pageNumber, setPageNumber, pageSize, setPageSize } = useContext(ProductContext);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+ // const { pageNumber, setPageNumber, pageSize, setPageSize } = useContext(ProductContext);
 
   return (
     <>

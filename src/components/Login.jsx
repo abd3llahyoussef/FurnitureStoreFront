@@ -67,6 +67,12 @@ export default function Login() {
         <button className="btn mt-4 bg-[#f5be91]" onClick={handleSubmit}>
           Login
         </button>
+        <a 
+          href="http://localhost:8080/auth/google" 
+          className="btn btn-outline border-[#f5be91] text-[#f5be91] hover:bg-[#f5be91] hover:text-white mt-2"
+        >
+          Login with Google
+        </a>
         <button className="btn bg-[#f5be91]">Guest User</button>
       </fieldset>
 
