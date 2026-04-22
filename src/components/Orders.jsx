@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { getUserOrders, getProductsByOrder } from '../features/orderSlice';
-import { useContext } from 'react';
-import { ProductContext } from '../features/productContext.jsx';
 import PaginationComponent from '../features/PaginationComponent.jsx';
 
 export default function Orders() {
 
     const dispatch = useDispatch();
-    const {pageNumber,setPageNumber,pageSize} = useContext(ProductContext)
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(6);
     const [expandedOrderId, setExpandedOrderId] = useState(null);
     const [orderProducts, setOrderProducts] = useState({});
     const [loadingProducts, setLoadingProducts] = useState(false);
@@ -74,6 +73,26 @@ export default function Orders() {
             </ul>
           </div>
           <h1 className="text-5xl font-black tracking-tight">Your Order History</h1>
+
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-6">
+            <p className="text-base-content/70">Showing orders {pageSize} per page.</p>
+            <div className="flex items-center gap-3">
+              <label className="text-sm font-semibold">Page size:</label>
+              <select
+                value={pageSize}
+                onChange={(e) => {
+                  setPageSize(Number(e.target.value));
+                  setPageNumber(1);
+                }}
+                className="select select-bordered"
+              >
+                <option value={5}>5</option>
+                <option value={6}>6</option>
+                <option value={8}>8</option>
+                <option value={10}>10</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         <div className="space-y-6">

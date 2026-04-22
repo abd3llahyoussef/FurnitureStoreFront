@@ -72,7 +72,7 @@ export const getProductsByOrder = createAsyncThunk(
 );
 export const getUserOrders = createAsyncThunk(
   "order/getUserOrders",
-  async ({pageNumber, pageSize}, thunkAPI) => {
+  async ({pageNumber=3, pageSize}, thunkAPI) => {
     const token = thunkAPI.getState().user.user.token;
     const fk_userId = thunkAPI.getState().user.user.findUser.userid;
     try {
